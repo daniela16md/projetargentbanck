@@ -22,7 +22,7 @@ function Editname() {
               <input
                 type="text"
                 id="userName"
-                value="" readOnly
+                defaultValue="" 
               />
             </div>
             <div className='edit-input'>
@@ -30,7 +30,7 @@ function Editname() {
               <input
                 type="text"
                 id="userName"
-                value=""readOnly
+                defaultValue="" readOnly
               />
             </div>
             <div className='edit-input'>
@@ -38,7 +38,7 @@ function Editname() {
               <input
                 type="text"
                 id="userName"
-                value=""readOnly
+                defaultValue="" readOnly
               />
             </div>
             <div className='buttons'>
