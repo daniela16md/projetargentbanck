@@ -1,5 +1,5 @@
 import React from 'react';
-import datas from "../../Data/profile.json"
+import datas from '../../Data/profile.json'
 
 function Dashboardcontent () {
   return (

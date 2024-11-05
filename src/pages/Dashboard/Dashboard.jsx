@@ -3,9 +3,9 @@ import Dashboardcontent from '../../components/Dashboardcontent/Dashboardcontent
 import Editname from '../../components/Editname/Editname';
 import './Dashboard.css'
 
-function dashboard() {
+function Dashboard() {
   return (
-    <div className='useraccount'>
+    <div className='usersaccount'>
       <div className='editname'> 
        <Editname />
       </div>
@@ -14,4 +14,4 @@ function dashboard() {
   )
 }
 
-export default dashboard
+export default Dashboard

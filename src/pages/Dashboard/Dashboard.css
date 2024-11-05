@@ -62,10 +62,10 @@
     font-size: 2rem; 
   }
   
-  .editnameh1 br {
+.editnameh1 br {
     display: block;
     margin-bottom: 0.5rem; 
-  }
+}
 
 .editnamebutton{
     border-color: #00bc77;
@@ -101,17 +101,17 @@ form {
 
 .edit-input label {
     font-size: 18px;
-    color: #333;
+    color: white;
     margin-bottom: 8px;
     font-weight: bold;
 }
 
-.iedit-input input {
+.edit-input input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
+    width: 60%;
     box-sizing: border-box;
     transition: border-color 0.3s ease;
     font-weight: bold;
@@ -149,6 +149,7 @@ button:active {
     transform: scale(0.98);
 }
 .edith2 {
-    margin-left: 20%;
+    margin-left: 25%;
 }
-  
+
+

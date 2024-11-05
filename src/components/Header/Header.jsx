@@ -14,7 +14,7 @@ function Header() {
         <Link className='main-nav-logo' to="/"><img className='main-nav-logo-image'src={Logo} alt='Logo'/>
         <h1 className='sr-only'>Argent Bank</h1></Link>
             <div className='main-menu'>
-            <Link className='main-nav-item' to='/dasboard'>
+            <Link className='main-nav-item' to='/dashboard'>
                 <FaUserCircle  className='fa fa-user-circle' aria-hidden="true"/>
                 <p>{ "User"}</p>
             </Link>
