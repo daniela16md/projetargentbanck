@@ -1,46 +1,48 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './Form.css';
-
-function Form() {
-  const [dataLogin, setDataLogin] = useState({ email: '', password: '' });
+import { fetchUserProfile } from '../../redux/userSlice'; 
+import './Form.css'
+function SignIn() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSetInput = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setDataLogin({
-      ...dataLogin,
+    setFormData({
+      ...formData,
       [name]: value,
     });
   };
 
   const handleSignIn = async (e) => {
-    e.preventDefault(); 
-    if (!dataLogin.email || !dataLogin.password) {
-      alert('Please fill in both email and password.');
-      return;
-    }
-    console.log('Request Payload:', dataLogin);
+    e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/api/v1/user/login', dataLogin, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Response:', response);
+      const response = await axios.post(
+        'http://localhost:3001/api/v1/user/login',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      if (response.status === 200) {
-        const token = response.data.body.token;
-        localStorage.setItem('token', token);
-        navigate('/dashboard');
-      } else {
-        alert('Error: ' + response.data.message || 'Identifiants incorrects.');
-      }
+      const token = response.data.body.token;
+      localStorage.setItem('token', token);
+
+      dispatch(fetchUserProfile());
+
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Error during sign-in:', error);
-      alert('Identifiants incorrects.');
+      console.error('Erreur de connexion:', error);
+      alert('Identifiants incorrects');
     }
   };
 
@@ -49,12 +51,12 @@ function Form() {
       <div className="input-wrapper">
         <label htmlFor="email">Email</label>
         <input
-          type="email" 
+          type="text"
           id="email"
           name="email"
-          value={dataLogin.email}
-          onChange={handleSetInput}
-          autoComplete="email" 
+          value={formData.email}
+          onChange={handleInputChange}
+          autoComplete="current-email"
         />
       </div>
       <div className="input-wrapper">
@@ -63,18 +65,14 @@ function Form() {
           type="password"
           id="password"
           name="password"
-          value={dataLogin.password}
-          onChange={handleSetInput}
-          autoComplete="current-password" 
+          value={formData.password}
+          onChange={handleInputChange}
+          autoComplete="current-password"
         />
-      </div>
-      <div className="input-remember">
-        <input type="checkbox" id="remember-me" />
-        <label htmlFor="remember-me">Remember me</label>
       </div>
       <button type="submit" className="sign-in-button">Sign In</button>
     </form>
   );
 }
 
-export default Form;
+export default SignIn;
