@@ -43,6 +43,7 @@ export const updateUserProfile = createAsyncThunk('user/updateUserProfile', asyn
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
           },
         }
       ); 

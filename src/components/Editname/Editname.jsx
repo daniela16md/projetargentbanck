@@ -31,22 +31,36 @@ function Editname() {
     setDisplay(!display);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!token) {
-      console.error ('no token');
+
+    if (!token) {
+      console.error('No token found');
       return;
     }
-    console.log('Submit form with data:', newUserData); 
+
     try {
-      console.log('Dispatching updateUserProfile with data:', newUserData, token);
-      dispatch(updateUserProfile(newUserData, token));
+      const updatedUserData = {
+        userName: newUserData.userName, 
+        firstName, 
+        lastName, 
+      };
+      console.log('Dispatching updateUserProfile with data:', updatedUserData);      
+      await dispatch(updateUserProfile(updatedUserData));
+      setDisplay(false);
       navigate('/dashboard');
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
       alert('Une erreur est survenue lors de la mise à jour.');
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevState) => ({
+      ...prevState,
+      [name]: value, 
+    }));
   };
 
   return (
@@ -67,9 +81,9 @@ function Editname() {
               <input
                 type="text"
                 id="userName"
-                name="username"
+                name="userName"
                 value={newUserData.userName || ''}
-                onChange={(e) => setUserData(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <div className='edit-input'>
@@ -77,8 +91,8 @@ function Editname() {
               <input
                 type="text"
                 id="firstname"
-                name="firstname"
-                value={firstName}
+                name="firstName"
+                value={firstName} 
                 readOnly
               />
             </div>
@@ -87,8 +101,8 @@ function Editname() {
               <input
                 type="text"
                 id="lastname"
-                name="lastname"
-                value={lastName}
+                name="lastName"
+                value={lastName} 
                 readOnly
               />
             </div>
