@@ -13,7 +13,6 @@ function Editname() {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const { userName, firstName, lastName } = useSelector((state) => state.user);
 
@@ -47,8 +46,7 @@ function Editname() {
       };
       console.log('Dispatching updateUserProfile with data:', updatedUserData);      
       await dispatch(updateUserProfile(updatedUserData));
-      setDisplay(false);
-      navigate('/dashboard');
+      setDisplay(true);
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
       alert('Une erreur est survenue lors de la mise à jour.');
@@ -62,6 +60,7 @@ function Editname() {
       [name]: value, 
     }));
   };
+ 
 
   return (
     <div className='editname'>
