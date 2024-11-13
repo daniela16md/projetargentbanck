@@ -4,26 +4,14 @@ import { updateUserProfile } from '../../redux/userSlice';
 
 function Editname() {
   const [display, setDisplay] = useState(true);
+  const [userNameInput, setUserNameInput] = useState('');
   const token = localStorage.getItem('token');
-  const [UserData, setUserData] = useState({
-    userName: '',
-    firstName: '',
-    lastName: '',
-  });
-
   const dispatch = useDispatch();
-  
   const { userName, firstName, lastName } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log('useEffect triggered');
-    console.log('User from store:', { userName, firstName, lastName });
-    setUserData({
-      userName: userName || '',
-      firstName: firstName || '',
-      lastName: lastName || '',
-    });
-  }, [userName, firstName, lastName]);
+    setUserNameInput(userName);
+  }, [userName]);
 
   const displayEdit = () => {
     setDisplay(!display);
@@ -31,21 +19,15 @@ function Editname() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!token) {
       console.error('No token found');
       return;
     }
-
     try {
       const updatedUserData = {
-        userName: UserData.userName, 
-        firstName, 
-        lastName, 
+        userName: userNameInput, 
       };
-      console.log('Dispatching updateUserProfile with data:', updatedUserData);      
       await dispatch(updateUserProfile(updatedUserData));
-      localStorage.setItem('userName', UserData.userName);
       setDisplay(true);
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
@@ -53,21 +35,12 @@ function Editname() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: value, 
-    }));
-  };
- 
-
   return (
     <div className='editname'>
       {display ? (
         <div>
           <h1 className='editnameh1'>
-            Welcome back <br /> {firstName} {lastName}
+            Welcome back <br /> {userName || ''}
           </h1>
           <button className='edith2' onClick={displayEdit}>Edit name</button>
         </div>
@@ -81,8 +54,8 @@ function Editname() {
                 type="text"
                 id="userName"
                 name="userName"
-                value={UserData.userName || ''}
-                onChange={handleInputChange}
+                value={userNameInput}
+                onChange={(e) => setUserNameInput(e.target.value)} 
               />
             </div>
             <div className='edit-input'>

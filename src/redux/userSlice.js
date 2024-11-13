@@ -3,25 +3,16 @@ import axios from 'axios';
 
 export const fetchUserProfile = createAsyncThunk('user/fetchUserProfile', async (_, { rejectWithValue }) => {
   try
-   {
-      console.log('Making GET request to /user/profile...');
-      
+    {
       const token = localStorage.getItem('token');
-      console.log(token)
-      
       if (!token) {
         throw new Error('Token is missing from localStorage');
       }
-      
       const response = await axios.get('http://localhost:3001/api/v1/user/profile', {
         headers: {
           'Authorization': `Bearer ${token}`, 
         },
-        
       });
-
-      console.log('API Response:', response);
-
       return response?.data?.body; 
     } catch (error) {
       console.error('Error during API call:', error);
@@ -34,9 +25,8 @@ export const fetchUserProfile = createAsyncThunk('user/fetchUserProfile', async 
 );
 
 export const updateUserProfile = createAsyncThunk('user/updateUserProfile', async (newUserData,  { rejectWithValue }) => {
-  
-  try {
-      console.log('Updating user profile...');
+  try 
+    {
       const response = await axios.put(
         'http://localhost:3001/api/v1/user/profile',
         newUserData,
@@ -47,7 +37,6 @@ export const updateUserProfile = createAsyncThunk('user/updateUserProfile', asyn
           },
         }
       ); 
-      console.log('Updated', response);
       return response?.data?.body;  
     } catch (error) {
       console.error('Error during API update call:', error);
@@ -75,7 +64,6 @@ const userSlice = createSlice({
       state.status = 'loading';
     })
     .addCase(fetchUserProfile.fulfilled, (state, action) => {
-      console.log('User profile fetched successfully:', action.payload);
       state.status = 'succeeded';
       state.userName = action.payload.userName;
       state.firstName = action.payload.firstName;
@@ -86,13 +74,11 @@ const userSlice = createSlice({
       state.error = action.payload;
     })
     .addCase(updateUserProfile.fulfilled, (state, action) => {
-      console.log('User profile updated successfully:', action.payload);
       state.userName = action.payload.userName;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
     })
     .addCase(updateUserProfile.rejected, (state, action) => {
-      console.log('Failed to update user profile:', action.payload);
       state.status = 'failed';
       state.error = action.payload;
     });
