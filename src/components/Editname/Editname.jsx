@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { updateUserProfile } from '../../redux/userSlice';
 
 function Editname() {
   const [display, setDisplay] = useState(true);
   const token = localStorage.getItem('token');
-  const [newUserData, setUserData] = useState({
+  const [UserData, setUserData] = useState({
     userName: '',
     firstName: '',
     lastName: '',
@@ -40,12 +39,13 @@ function Editname() {
 
     try {
       const updatedUserData = {
-        userName: newUserData.userName, 
+        userName: UserData.userName, 
         firstName, 
         lastName, 
       };
       console.log('Dispatching updateUserProfile with data:', updatedUserData);      
       await dispatch(updateUserProfile(updatedUserData));
+      localStorage.setItem('userName', UserData.userName);
       setDisplay(true);
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
@@ -81,7 +81,7 @@ function Editname() {
                 type="text"
                 id="userName"
                 name="userName"
-                value={newUserData.userName || ''}
+                value={UserData.userName || ''}
                 onChange={handleInputChange}
               />
             </div>
